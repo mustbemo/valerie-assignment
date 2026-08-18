@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title description">
+  <title id="title">Long-exposure light trails</title>
+  <desc id="description">Red, amber, and white light trails sweeping across a dark road.</desc>
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#030006"/>
+      <stop offset="0.58" stop-color="#09020f"/>
+      <stop offset="1" stop-color="#16031b"/>
+    </linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08080c"/>
+      <stop offset="0.5" stop-color="#24232a"/>
+      <stop offset="1" stop-color="#050508"/>
+    </linearGradient>
+    <linearGradient id="redTrail" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#ff1f38" stop-opacity="0"/>
+      <stop offset="0.35" stop-color="#ff203d"/>
+      <stop offset="0.76" stop-color="#ff5a2e"/>
+      <stop offset="1" stop-color="#fff0d6"/>
+    </linearGradient>
+    <linearGradient id="whiteTrail" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#a8d9ff" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="#f9fdff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#night)"/>
+  <path d="M0 414 C232 329 399 304 800 297 L800 500 L0 500Z" fill="url(#road)"/>
+  <path d="M-40 388 C234 284 450 266 842 276" fill="none" stroke="#ef163f" stroke-width="32" stroke-linecap="round" opacity="0.34" filter="url(#softGlow)"/>
+  <g fill="none" stroke-linecap="round" filter="url(#glow)">
+    <path d="M-50 402 C214 305 452 276 842 286" stroke="url(#redTrail)" stroke-width="13"/>
+    <path d="M-40 427 C228 328 462 300 842 309" stroke="url(#redTrail)" stroke-width="7"/>
+    <path d="M-40 370 C221 276 453 249 842 260" stroke="url(#whiteTrail)" stroke-width="10"/>
+    <path d="M-40 350 C224 263 455 236 842 246" stroke="#c6e8ff" stroke-width="3" opacity="0.82"/>
+    <path d="M-50 449 C218 351 459 323 842 334" stroke="#ff7b25" stroke-width="4" opacity="0.95"/>
+  </g>
+  <g fill="#ffffff" opacity="0.7">
+    <circle cx="681" cy="196" r="2"/>
+    <circle cx="726" cy="170" r="1.5"/>
+    <circle cx="748" cy="213" r="1.2"/>
+  </g>
+</svg>

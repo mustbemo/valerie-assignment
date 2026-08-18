@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Neural data stream</title>
+  <desc id="desc">Glowing blue data paths and nodes flowing through a dark network.</desc>
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#041325"/><stop offset=".52" stop-color="#062b4b"/><stop offset="1" stop-color="#020914"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#0a62a4"/><stop offset=".45" stop-color="#42c7ff"/><stop offset="1" stop-color="#89e5ff"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#base)"/>
+  <g fill="none" stroke="url(#line)" stroke-width="5" opacity=".78">
+    <path d="M-80 810C130 740 124 514 286 460S430 170 588 102 780 26 980 0"/>
+    <path d="M-70 870C145 790 180 580 335 506S470 238 630 150 802 72 976 32"/>
+    <path d="M-120 712C94 658 96 430 244 386S392 120 536 58 750-24 942-38"/>
+    <path d="M-40 930C210 852 238 654 386 566S530 318 687 224 850 156 1010 96"/>
+  </g>
+  <g fill="none" stroke="#0e75bf" stroke-width="2" opacity=".5">
+    <path d="M-40 770C118 700 196 650 278 530S420 350 516 250 694 104 934 48"/>
+    <path d="M22 910C180 830 274 750 344 628S478 426 580 340 728 218 922 160"/>
+    <path d="M-66 614C122 580 172 418 276 314S426 104 652 20"/>
+  </g>
+  <g fill="#d9f7ff" filter="url(#glow)">
+    <circle cx="162" cy="687" r="8"/><circle cx="262" cy="497" r="6"/>
+    <circle cx="356" cy="446" r="9"/><circle cx="433" cy="286" r="6"/>
+    <circle cx="516" cy="247" r="8"/><circle cx="602" cy="142" r="7"/>
+    <circle cx="690" cy="118" r="5"/><circle cx="764" cy="64" r="8"/>
+    <circle cx="212" cy="755" r="5"/><circle cx="487" cy="406" r="5"/>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Earth at night</title>
+  <desc id="desc">The illuminated curve of Earth viewed from space.</desc>
+  <defs>
+    <radialGradient id="space" cx="50%" cy="14%" r="90%">
+      <stop offset="0" stop-color="#151021"/>
+      <stop offset="0.55" stop-color="#06050b"/>
+      <stop offset="1" stop-color="#020204"/>
+    </radialGradient>
+    <radialGradient id="earth" cx="50%" cy="0" r="72%">
+      <stop offset="0" stop-color="#315a79"/>
+      <stop offset="0.28" stop-color="#142f48"/>
+      <stop offset="0.7" stop-color="#07121f"/>
+      <stop offset="1" stop-color="#01040a"/>
+    </radialGradient>
+    <linearGradient id="horizon" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#70d8ff" stop-opacity="0"/>
+      <stop offset="0.48" stop-color="#42bdf4"/>
+      <stop offset="1" stop-color="#0f426b" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="9"/></filter>
+    <filter id="cityGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#space)"/>
+  <g fill="#fff" opacity=".72">
+    <circle cx="82" cy="94" r="1.5"/><circle cx="168" cy="218" r="1"/>
+    <circle cx="284" cy="112" r="1.3"/><circle cx="374" cy="181" r=".9"/>
+    <circle cx="535" cy="86" r="1.4"/><circle cx="638" cy="222" r="1"/>
+    <circle cx="784" cy="128" r="1.6"/><circle cx="842" cy="268" r=".8"/>
+    <circle cx="716" cy="354" r="1.1"/><circle cx="214" cy="346" r="1.2"/>
+  </g>
+  <ellipse cx="450" cy="930" rx="650" ry="520" fill="#1f9ddb" opacity=".35" filter="url(#blur)"/>
+  <ellipse cx="450" cy="950" rx="635" ry="520" fill="url(#earth)"/>
+  <path d="M-160 670C85 442 238 402 450 402S814 442 1060 670" fill="none" stroke="url(#horizon)" stroke-width="13" opacity=".78"/>
+  <g fill="#ffd995" filter="url(#cityGlow)">
+    <circle cx="176" cy="620" r="3"/><circle cx="205" cy="592" r="2"/><circle cx="236" cy="637" r="2.6"/>
+    <circle cx="282" cy="571" r="2"/><circle cx="309" cy="614" r="3.5"/><circle cx="345" cy="554" r="2.4"/>
+    <circle cx="382" cy="596" r="2"/><circle cx="419" cy="535" r="3"/><circle cx="458" cy="574" r="2"/>
+    <circle cx="503" cy="526" r="2.5"/><circle cx="548" cy="583" r="3"/><circle cx="587" cy="548" r="2"/>
+    <circle cx="626" cy="606" r="3.4"/><circle cx="666" cy="568" r="2.2"/><circle cx="711" cy="627" r="3"/>
+  </g>
+  <g fill="none" stroke="#8cc7e4" stroke-width="1.4" opacity=".25">
+    <path d="M130 671C290 570 350 535 510 525"/><path d="M295 702C420 603 520 564 722 590"/>
+    <path d="M218 588C388 650 507 659 680 603"/>
+  </g>
+</svg>
