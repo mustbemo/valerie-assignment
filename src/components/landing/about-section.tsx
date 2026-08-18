@@ -49,47 +49,36 @@ function RobotCallouts() {
             <stop offset="0.52" stopColor="#fcf8fd" />
             <stop offset="1" stopColor="#77e8ff" />
           </linearGradient>
+          <marker
+            id="robot-callout-arrow"
+            viewBox="0 0 8 8"
+            refX="7"
+            refY="4"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto"
+          >
+            <path d="M0 0L8 4L0 8Z" fill="#d14bff" />
+          </marker>
         </defs>
 
         <path
           data-callout-line
           className={styles.calloutPath}
-          pathLength={1}
-          d="M71.5 25.5 L82 17.5 H95"
+          markerEnd="url(#robot-callout-arrow)"
+          d="M82 22H78.5L65.5 25.5"
         />
         <path
           data-callout-line
           className={styles.calloutPath}
-          pathLength={1}
-          d="M70.5 45 L84 45 L89 40.5 H96"
+          markerEnd="url(#robot-callout-arrow)"
+          d="M82 48H77.5L65 45"
         />
         <path
           data-callout-line
           className={styles.calloutPath}
-          pathLength={1}
-          d="M70 67 L82 67 L87 72 H95"
-        />
-
-        <circle
-          data-callout-node
-          className={styles.calloutNode}
-          cx="71.5"
-          cy="25.5"
-          r="0.6"
-        />
-        <circle
-          data-callout-node
-          className={styles.calloutNode}
-          cx="70.5"
-          cy="45"
-          r="0.6"
-        />
-        <circle
-          data-callout-node
-          className={styles.calloutNode}
-          cx="70"
-          cy="67"
-          r="0.6"
+          markerEnd="url(#robot-callout-arrow)"
+          d="M82 75.5H77.5L64.5 67"
         />
       </svg>
 

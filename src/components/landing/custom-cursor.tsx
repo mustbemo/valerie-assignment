@@ -15,21 +15,30 @@ export function CustomCursor() {
 
     if (!cursor || !finePointer.matches) return;
 
-    const target = { x: -100, y: -100 };
-    const current = { x: -100, y: -100 };
     let animationFrame = 0;
+    let customCursorEnabled = false;
+    let pointerX = -100;
+    let pointerY = -100;
 
     const renderCursor = () => {
-      current.x += (target.x - current.x) * 0.2;
-      current.y += (target.y - current.y) * 0.2;
-      cursor.style.transform = `translate3d(${current.x}px, ${current.y}px, 0)`;
-      animationFrame = requestAnimationFrame(renderCursor);
+      cursor.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
+      animationFrame = 0;
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      target.x = event.clientX;
-      target.y = event.clientY;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+
+      if (!customCursorEnabled) {
+        document.documentElement.dataset.customCursor = "true";
+        customCursorEnabled = true;
+      }
+
       cursor.classList.add(styles.cursorVisible);
+
+      if (!animationFrame) {
+        animationFrame = requestAnimationFrame(renderCursor);
+      }
 
       const hoveredElement = event.target instanceof Element ? event.target : null;
       cursor.classList.toggle(
@@ -42,14 +51,20 @@ export function CustomCursor() {
       cursor.classList.remove(styles.cursorVisible);
     };
 
-    document.documentElement.dataset.customCursor = "true";
+    const handleScroll = () => {
+      if (customCursorEnabled) {
+        cursor.classList.add(styles.cursorVisible);
+      }
+    };
+
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("mouseleave", handlePointerLeave);
-    animationFrame = requestAnimationFrame(renderCursor);
 
     return () => {
       delete document.documentElement.dataset.customCursor;
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mouseleave", handlePointerLeave);
       cancelAnimationFrame(animationFrame);
     };

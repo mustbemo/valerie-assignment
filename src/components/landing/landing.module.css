@@ -245,12 +245,24 @@
   transform: translateY(clamp(-5.5rem, -6svh, -3rem));
 }
 
+.aboutCopy .sectionTitle {
+  font-size: clamp(4rem, 5.2vw, 5.25rem);
+  line-height: 0.98;
+}
+
+.aboutCopy .sectionIntro {
+  max-width: 30rem;
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+}
+
 .aboutCopy > * {
   will-change: filter, opacity, transform;
 }
 
 .aboutCallouts {
   @apply pointer-events-none absolute inset-0 z-40 font-mono uppercase;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .calloutLines {
@@ -260,42 +272,36 @@
 .calloutPath {
   fill: none;
   stroke: url("#robot-callout-gradient");
-  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.9;
   vector-effect: non-scaling-stroke;
-}
-
-.calloutNode {
-  fill: var(--primary);
-  stroke: rgb(252 248 253 / 80%);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 0.4rem rgb(209 75 255 / 90%));
+  opacity: 0.78;
 }
 
 .calloutItem {
-  @apply absolute w-48 border-t border-foreground/25 pt-2 text-right;
-  background: linear-gradient(270deg, rgb(209 75 255 / 8%), transparent 85%);
+  @apply absolute w-[clamp(11rem,15vw,15rem)] border border-foreground/20 px-3 py-2.5 text-left;
+  left: 82%;
+  background: linear-gradient(100deg, rgb(209 75 255 / 10%), rgb(45 6 56 / 72%) 72%);
+  backdrop-filter: blur(0.5rem);
   will-change: filter, opacity, transform;
 }
 
 .calloutItem::after {
-  @apply absolute -right-px -top-px size-2 border-r border-t border-primary;
+  @apply absolute -left-1 top-1/2 size-2 -translate-y-1/2 rotate-45 border-b border-l border-primary bg-brand-900;
   content: "";
 }
 
 .calloutVision {
-  right: 3.5%;
-  top: 12.5%;
+  top: 16.5%;
 }
 
 .calloutNeural {
-  right: 2.5%;
-  top: 35.5%;
+  top: 42.5%;
 }
 
 .calloutMotion {
-  bottom: 19%;
-  right: 3.5%;
+  top: 70%;
 }
 
 .calloutIndex {
@@ -451,6 +457,7 @@
 .cursor {
   @apply pointer-events-none fixed left-0 top-0 z-60 hidden opacity-0;
   transition: opacity 160ms ease;
+  will-change: transform;
 }
 
 .cursorVisible {
@@ -544,6 +551,11 @@
 
   .aboutCopy {
     transform: none;
+  }
+
+  .aboutCallouts {
+    visibility: visible;
+    opacity: 1;
   }
 
   .aboutAnchor {

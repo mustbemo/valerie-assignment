@@ -73,7 +73,7 @@ const aboutHandoffMotion: MotionState = {
 
 const aboutRestMotion: MotionState = {
   ...heroFocusedMotion,
-  x: 1.82,
+  x: 1.35,
   y: -0.3,
   scale: 0.7,
   rotationY: -0.08,

@@ -33,6 +33,11 @@ export function IntroStory({ children }: IntroStoryProps) {
       const aboutBackdrop = story.querySelector(
         '[data-story-element="about-backdrop"]',
       );
+      const calloutLines = Array.from(
+        aboutCallouts?.querySelectorAll<SVGPathElement>(
+          '[data-callout-line]',
+        ) ?? [],
+      );
 
       if (
         !about ||
@@ -68,19 +73,16 @@ export function IntroStory({ children }: IntroStoryProps) {
           x: -56,
         })
         .set(aboutVisual, { autoAlpha: 0 })
+        .set(aboutCallouts, { autoAlpha: 0 })
+        .set(calloutLines, {
+          autoAlpha: 0,
+          scaleX: 0.18,
+          transformOrigin: "82% 50%",
+        })
         .set(aboutCallouts.querySelectorAll('[data-callout-item]'), {
           autoAlpha: 0,
           filter: "blur(6px)",
           x: 16,
-        })
-        .set(aboutCallouts.querySelectorAll('[data-callout-line]'), {
-          strokeDasharray: 1,
-          strokeDashoffset: 1,
-        })
-        .set(aboutCallouts.querySelectorAll('[data-callout-node]'), {
-          autoAlpha: 0,
-          scale: 0,
-          transformOrigin: "center",
         })
         .to(
           heroContent,
@@ -149,26 +151,17 @@ export function IntroStory({ children }: IntroStoryProps) {
           },
           2.05,
         )
+        .to(aboutCallouts, { autoAlpha: 1, duration: 0.01 }, 2.08)
         .to(
-          aboutCallouts.querySelectorAll('[data-callout-line]'),
+          calloutLines,
           {
-            strokeDashoffset: 0,
-            duration: 0.58,
+            autoAlpha: 1,
+            duration: 0.48,
+            scaleX: 1,
             stagger: 0.1,
             ease: "power2.out",
           },
-          2.22,
-        )
-        .to(
-          aboutCallouts.querySelectorAll('[data-callout-node]'),
-          {
-            autoAlpha: 1,
-            scale: 1,
-            duration: 0.3,
-            stagger: 0.1,
-            ease: "back.out(2)",
-          },
-          2.34,
+          2.1,
         )
         .to(
           aboutCallouts.querySelectorAll('[data-callout-item]'),
@@ -180,7 +173,7 @@ export function IntroStory({ children }: IntroStoryProps) {
             stagger: 0.1,
             ease: "power2.out",
           },
-          2.42,
+          2.22,
         );
 
       requestAnimationFrame(() => ScrollTrigger.refresh());
