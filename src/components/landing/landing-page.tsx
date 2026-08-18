@@ -7,22 +7,26 @@ import { CustomCursor } from "./custom-cursor";
 import { FeaturesSection } from "./features-section";
 import { IntroStory } from "./intro-story";
 import { ServicesSection } from "./services-section";
+import { ViewportLock } from "./viewport-lock";
 
 export function LandingPage() {
   return (
-    <div
-      id="landing-page"
-      className="relative overflow-x-clip bg-background text-foreground"
-    >
-      <RobotPreload />
-      <CustomCursor />
-      <RobotStage />
-      <IntroStory>
-        <HeroSection />
-        <AboutSection />
-      </IntroStory>
-      <ServicesSection />
-      <FeaturesSection />
-    </div>
+    <>
+      <ViewportLock />
+      <div
+        id="landing-page"
+        className="relative overflow-x-clip bg-background text-foreground [@media(max-height:719px)]:hidden max-[1279px]:hidden"
+      >
+        <RobotPreload />
+        <CustomCursor />
+        <RobotStage />
+        <IntroStory>
+          <HeroSection />
+          <AboutSection />
+        </IntroStory>
+        <ServicesSection />
+        <FeaturesSection />
+      </div>
+    </>
   );
 }
