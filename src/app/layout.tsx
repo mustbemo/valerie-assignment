@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Aldrich, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         {children}
+        <Analytics />
       </body>
     </html>
   );
