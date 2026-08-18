@@ -5,12 +5,14 @@ import { AboutSection } from "./about-section";
 import { CustomCursor } from "./custom-cursor";
 import { FeaturesSection } from "./features-section";
 import { IntroStory } from "./intro-story";
-import styles from "./landing.module.css";
 import { ServicesSection } from "./services-section";
 
 export function LandingPage() {
   return (
-    <div id="landing-page" className={styles.page}>
+    <div
+      id="landing-page"
+      className="relative overflow-x-clip bg-background text-foreground"
+    >
       <CustomCursor />
       <RobotStage />
       <IntroStory>

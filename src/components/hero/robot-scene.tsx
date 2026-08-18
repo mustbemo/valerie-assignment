@@ -17,12 +17,13 @@ import {
 const MODEL_PATH = "/robot.glb";
 const NORMALIZED_MODEL_HEIGHT = 5.35;
 const FULL_ROTATION = Math.PI * 2;
+const SERVICE_ROTATION = FULL_ROTATION * 0.62;
+const FEATURE_ROTATION = FULL_ROTATION;
 
 type MotionState = {
   x: number;
   y: number;
   scale: number;
-  rotationY: number;
   cameraY: number;
   cameraZ: number;
   cameraTargetY: number;
@@ -35,7 +36,6 @@ const initialMotion: MotionState = {
   x: 0.12,
   y: -2.34,
   scale: 0.98,
-  rotationY: -0.36,
   cameraY: 0.08,
   cameraZ: 8.15,
   cameraTargetY: -0.24,
@@ -47,11 +47,10 @@ const initialMotion: MotionState = {
 const heroFocusedMotion: MotionState = {
   x: 0,
   y: -1.34,
-  scale: 1.02,
-  rotationY: 0,
-  cameraY: 0.08,
-  cameraZ: 8.15,
-  cameraTargetY: -0.24,
+  scale: 0.98,
+  cameraY: 0.04,
+  cameraZ: 7.65,
+  cameraTargetY: -0.18,
   keyLight: 42,
   fillLight: 26,
   cursorInfluence: 0.35,
@@ -59,56 +58,64 @@ const heroFocusedMotion: MotionState = {
 
 const aboutHandoffMotion: MotionState = {
   ...heroFocusedMotion,
-  x: 0,
-  y: -0.34,
-  scale: 0.9,
-  rotationY: 0,
+  x: 0.58,
+  y: -0.46,
+  scale: 0.86,
   cameraY: 0,
-  cameraZ: 8.5,
-  cameraTargetY: -0.08,
+  cameraZ: 7.3,
+  cameraTargetY: -0.06,
   keyLight: 48,
   fillLight: 30,
-  cursorInfluence: 0.04,
+  cursorInfluence: 0,
 };
 
 const aboutRestMotion: MotionState = {
   ...heroFocusedMotion,
-  x: 1.35,
-  y: -0.3,
-  scale: 0.7,
-  rotationY: -0.08,
-  cameraY: 0,
-  cameraZ: 8.75,
-  cameraTargetY: -0.06,
+  x: 0.85,
+  y: -0.28,
+  scale: 0.66,
+  cameraY: -0.06,
+  cameraZ: 7.75,
+  cameraTargetY: -0.02,
   keyLight: 41,
   fillLight: 27,
-  cursorInfluence: 0.04,
+  cursorInfluence: 0,
 };
 
 const serviceMotion: MotionState = {
-  x: 2.25,
-  y: -0.08,
-  scale: 0.72,
-  rotationY: FULL_ROTATION * 0.58,
-  cameraY: -0.24,
-  cameraZ: 8.35,
-  cameraTargetY: 0.02,
-  keyLight: 32,
-  fillLight: 36,
-  cursorInfluence: 0.18,
+  x: 3.45,
+  y: -0.2,
+  scale: 0.5,
+  cameraY: -0.04,
+  cameraZ: 8.55,
+  cameraTargetY: -0.02,
+  keyLight: 38,
+  fillLight: 32,
+  cursorInfluence: 0.08,
+};
+
+const featureHandoffMotion: MotionState = {
+  x: 3.6,
+  y: 1.15,
+  scale: 0.46,
+  cameraY: -0.01,
+  cameraZ: 8.9,
+  cameraTargetY: -0.04,
+  keyLight: 36,
+  fillLight: 28,
+  cursorInfluence: 0.1,
 };
 
 const featureMotion: MotionState = {
-  x: 1.72,
-  y: -0.18,
-  scale: 0.76,
-  rotationY: FULL_ROTATION,
-  cameraY: 0.04,
-  cameraZ: 8.55,
-  cameraTargetY: -0.14,
-  keyLight: 38,
-  fillLight: 24,
-  cursorInfluence: 0.22,
+  x: 3.75,
+  y: 0.65,
+  scale: 0.44,
+  cameraY: 0.02,
+  cameraZ: 9.25,
+  cameraTargetY: -0.08,
+  keyLight: 34,
+  fillLight: 25,
+  cursorInfluence: 0.12,
 };
 
 gsap.registerPlugin(ScrollTrigger);
@@ -123,6 +130,7 @@ function RobotModel({ onReady }: RobotModelProps) {
   const keyLight = useRef<PointLight>(null);
   const fillLight = useRef<PointLight>(null);
   const motion = useRef<MotionState>({ ...initialMotion });
+  const orientation = useRef({ y: 0 });
   const cursor = useRef({ x: 0, y: 0 });
   const { scene } = useGLTF(MODEL_PATH, false, true);
 
@@ -163,22 +171,22 @@ function RobotModel({ onReady }: RobotModelProps) {
     }
 
     const context = gsap.context(() => {
-      const introTimeline = gsap.timeline({
+      const pageTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "#intro-story",
+          trigger: "#landing-page",
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.65,
+          scrub: 0.55,
           invalidateOnRefresh: true,
         },
       });
 
-      introTimeline
+      pageTimeline
         .to(
           motion.current,
           {
             ...heroFocusedMotion,
-            duration: 0.6,
+            duration: 0.45,
             ease: "power2.out",
           },
           0,
@@ -187,61 +195,86 @@ function RobotModel({ onReady }: RobotModelProps) {
           motion.current,
           {
             ...aboutHandoffMotion,
-            duration: 0.8,
+            duration: 0.9,
             ease: "power2.inOut",
           },
-          0.35,
-        )
-        .to(
-          motion.current,
-          {
-            ...aboutHandoffMotion,
-            duration: 0.22,
-            ease: "none",
-          },
-          1.15,
+          0.45,
         )
         .to(
           motion.current,
           {
             ...aboutRestMotion,
-            duration: 0.62,
+            duration: 0.8,
             ease: "power3.inOut",
           },
-          1.37,
+          1.35,
         )
         .to(
           motion.current,
           {
             ...aboutRestMotion,
-            duration: 1.57,
+            duration: 0.17,
             ease: "none",
           },
-          1.99,
+          2.15,
+        )
+        .to(
+          motion.current,
+          {
+            ...serviceMotion,
+            duration: 0.75,
+            ease: "power3.inOut",
+          },
+          2.32,
+        )
+        .to(
+          motion.current,
+          {
+            ...featureHandoffMotion,
+            duration: 0.55,
+            ease: "power3.inOut",
+          },
+          3.07,
+        )
+        .to(
+          motion.current,
+          {
+            ...featureMotion,
+            duration: 0.68,
+            ease: "power3.inOut",
+          },
+          3.62,
+        )
+        .to(
+          motion.current,
+          {
+            ...featureMotion,
+            duration: 0.35,
+            ease: "none",
+          },
+          4.35,
         );
 
-      gsap.to(motion.current, {
-        ...serviceMotion,
-        duration: 1,
-        ease: "power3.inOut",
+      gsap.to(orientation.current, {
+        y: SERVICE_ROTATION,
+        ease: "none",
         scrollTrigger: {
           trigger: "#service",
-          start: "top 82%",
-          end: "top 38%",
-          scrub: 0.38,
+          start: "top bottom",
+          end: "top 35%",
+          scrub: 0.55,
           invalidateOnRefresh: true,
         },
       });
 
-      gsap.to(motion.current, {
-        ...featureMotion,
-        duration: 1,
-        ease: "power3.inOut",
+      gsap.to(orientation.current, {
+        y: FEATURE_ROTATION,
+        ease: "none",
         scrollTrigger: {
           trigger: "#feature",
-          start: "top 82%",
-          end: "top 38%",
-          scrub: 0.38,
+          start: "top bottom",
+          end: "top 35%",
+          scrub: 0.55,
           invalidateOnRefresh: true,
         },
       });
@@ -268,7 +301,7 @@ function RobotModel({ onReady }: RobotModelProps) {
     );
     group.rotation.y = MathUtils.damp(
       group.rotation.y,
-      state.rotationY + cursorYaw,
+      orientation.current.y + cursorYaw,
       10,
       delta,
     );

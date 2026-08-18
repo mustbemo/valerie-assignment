@@ -4,8 +4,6 @@ import { type ReactNode, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import styles from "./landing.module.css";
-
 gsap.registerPlugin(ScrollTrigger);
 
 type IntroStoryProps = {
@@ -183,17 +181,32 @@ export function IntroStory({ children }: IntroStoryProps) {
   }, []);
 
   return (
-    <div ref={storyRef} id="intro-story" className={styles.introStory}>
-      <span id="about" className={styles.aboutAnchor} aria-hidden="true" />
-      <div className={styles.storyBackdrop} aria-hidden="true">
+    <div
+      ref={storyRef}
+      id="intro-story"
+      className="relative"
+    >
+      <span
+        id="about"
+        className="pointer-events-none absolute top-3/4 left-0 motion-reduce:hidden"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed inset-0 z-10 overflow-hidden bg-linear-to-b from-brand-900 via-brand-600 to-brand-600 motion-reduce:hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute inset-x-1/10 top-1/5 bottom-1/10 rounded-full bg-primary/10 blur-3xl" />
         <div
-          className={styles.aboutBackdrop}
+          className="absolute inset-0 bg-brand-950 opacity-0 will-change-[opacity]"
           data-story-element="about-backdrop"
         />
       </div>
-      <div className={styles.storySticky}>
+      <div className="sticky top-0 z-30 h-svh overflow-hidden motion-reduce:relative motion-reduce:h-auto motion-reduce:overflow-visible">
         {children}
       </div>
+      <div className="h-svh motion-reduce:hidden" aria-hidden="true" />
+      <div className="h-svh motion-reduce:hidden" aria-hidden="true" />
+      <div className="h-svh motion-reduce:hidden" aria-hidden="true" />
     </div>
   );
 }

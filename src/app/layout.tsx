@@ -25,9 +25,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${aldrich.variable} h-full font-sans antialiased`}
+      className={`${dmSans.variable} ${aldrich.variable} h-full scheme-light bg-background font-sans antialiased data-[custom-cursor=true]:cursor-none`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col bg-background text-foreground">
+        {children}
+      </body>
     </html>
   );
 }

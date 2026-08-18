@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-import styles from "./landing.module.css";
-
 const INTERACTIVE_SELECTOR = "a, button, input, [role='button']";
 
 export function CustomCursor() {
@@ -34,26 +32,25 @@ export function CustomCursor() {
         customCursorEnabled = true;
       }
 
-      cursor.classList.add(styles.cursorVisible);
+      cursor.dataset.visible = "true";
 
       if (!animationFrame) {
         animationFrame = requestAnimationFrame(renderCursor);
       }
 
       const hoveredElement = event.target instanceof Element ? event.target : null;
-      cursor.classList.toggle(
-        styles.cursorActive,
+      cursor.dataset.active = String(
         Boolean(hoveredElement?.closest(INTERACTIVE_SELECTOR)),
       );
     };
 
     const handlePointerLeave = () => {
-      cursor.classList.remove(styles.cursorVisible);
+      cursor.dataset.visible = "false";
     };
 
     const handleScroll = () => {
       if (customCursorEnabled) {
-        cursor.classList.add(styles.cursorVisible);
+        cursor.dataset.visible = "true";
       }
     };
 
@@ -71,9 +68,13 @@ export function CustomCursor() {
   }, []);
 
   return (
-    <div ref={cursorRef} className={styles.cursor} aria-hidden="true">
-      <span className={styles.cursorRing} />
-      <span className={styles.cursorDot} />
+    <div
+      ref={cursorRef}
+      className="group/cursor pointer-events-none fixed top-0 left-0 z-60 hidden opacity-0 transition-opacity duration-150 will-change-transform data-[visible=true]:opacity-100 pointer-fine:block motion-reduce:hidden"
+      aria-hidden="true"
+    >
+      <span className="absolute size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/75 transition duration-200 group-data-[active=true]/cursor:scale-150 group-data-[active=true]/cursor:border-primary group-data-[active=true]/cursor:bg-primary/15" />
+      <span className="absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground" />
     </div>
   );
 }
