@@ -47,3 +47,64 @@
   --color-sidebar-border: #713080;
   --color-sidebar-ring: #d14bff;
 }
+
+@keyframes circuit-signal-flow {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.circuit-signal {
+  stroke-dasharray: 0.07 0.93;
+  stroke-dashoffset: 1;
+  animation: circuit-signal-flow 4.8s linear infinite;
+}
+
+.circuit-signal-delay-1 {
+  animation-delay: -0.4s;
+}
+
+.circuit-signal-delay-2 {
+  animation-delay: -2.7s;
+}
+
+.circuit-signal-delay-3 {
+  animation-delay: -1.5s;
+}
+
+.circuit-signal-delay-4 {
+  animation-delay: -3.8s;
+}
+
+.circuit-signal-delay-5 {
+  animation-delay: -2.1s;
+}
+
+.circuit-signal-delay-6 {
+  animation-delay: -3.2s;
+}
+
+.circuit-signal-delay-7 {
+  animation-delay: -0.9s;
+}
+
+.circuit-signal-delay-8 {
+  animation-delay: -4.3s;
+}
+
+.circuit-signal-delay-9 {
+  animation-delay: -1.9s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-signal {
+    animation: none;
+    opacity: 0.45;
+    stroke-dasharray: 0.035 0.965;
+    stroke-dashoffset: 0.28;
+  }
+}

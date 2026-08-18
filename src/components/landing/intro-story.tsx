@@ -136,7 +136,7 @@ export function IntroStory({ children }: IntroStoryProps) {
           },
           0.4,
         )
-        .set(about, { pointerEvents: "auto" }, 2)
+        .set(about, { pointerEvents: "auto" }, 1.35)
         .to(
           aboutCopy.children,
           {
@@ -147,9 +147,9 @@ export function IntroStory({ children }: IntroStoryProps) {
             stagger: 0.12,
             ease: "power2.out",
           },
-          2.05,
+          1.4,
         )
-        .to(aboutCallouts, { autoAlpha: 1, duration: 0.01 }, 2.08)
+        .to(aboutCallouts, { autoAlpha: 1, duration: 0.01 }, 1.43)
         .to(
           calloutLines,
           {
@@ -159,7 +159,7 @@ export function IntroStory({ children }: IntroStoryProps) {
             stagger: 0.1,
             ease: "power2.out",
           },
-          2.1,
+          1.45,
         )
         .to(
           aboutCallouts.querySelectorAll('[data-callout-item]'),
@@ -171,7 +171,7 @@ export function IntroStory({ children }: IntroStoryProps) {
             stagger: 0.1,
             ease: "power2.out",
           },
-          2.22,
+          1.57,
         );
 
       requestAnimationFrame(() => ScrollTrigger.refresh());

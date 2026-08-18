@@ -53,15 +53,18 @@ export function ServicesSection() {
     const aboutCallouts = document.querySelector(
       '[data-story-element="about-callouts"]',
     );
+    const featureSection = document.querySelector("#feature");
 
-    if (!heading || !cards.length || !aura) return;
+    if (!heading || !cards.length || !aura || !featureSection) return;
+
+    const serviceContent = [heading, ...Array.from(cards)];
 
     const context = gsap.context(() => {
       gsap.set(heading, {
         autoAlpha: 0,
         filter: "blur(12px)",
         scale: 0.96,
-        y: 72,
+        y: 48,
       });
       gsap.set(cards, {
         autoAlpha: 0,
@@ -70,16 +73,16 @@ export function ServicesSection() {
         scale: 0.92,
         transformPerspective: 1200,
         transformOrigin: "50% 100%",
-        y: 120,
+        y: 72,
       });
       gsap.set(aura, { autoAlpha: 0, scale: 0.68 });
 
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top 92%",
-          end: "top 12%",
-          scrub: 0.72,
+          start: "top bottom",
+          end: "top 40%",
+          scrub: 0.45,
           invalidateOnRefresh: true,
         },
       });
@@ -93,7 +96,7 @@ export function ServicesSection() {
             scale: 1.025,
             x: -52,
             y: -24,
-            duration: 0.72,
+            duration: 0.3,
             ease: "power2.inOut",
           },
           0,
@@ -107,10 +110,10 @@ export function ServicesSection() {
             autoAlpha: 0,
             filter: "blur(8px)",
             x: 54,
-            duration: 0.62,
+            duration: 0.3,
             ease: "power2.inOut",
           },
-          0.04,
+          0,
         );
       }
 
@@ -120,10 +123,10 @@ export function ServicesSection() {
           {
             autoAlpha: 0.72,
             scale: 1,
-            duration: 0.68,
+            duration: 0.3,
             ease: "power2.out",
           },
-          0.18,
+          0,
         )
         .to(
           heading,
@@ -132,10 +135,10 @@ export function ServicesSection() {
             filter: "blur(0px)",
             scale: 1,
             y: 0,
-            duration: 0.72,
+            duration: 0.35,
             ease: "power3.out",
           },
-          0.42,
+          0,
         )
         .to(
           cards,
@@ -144,22 +147,57 @@ export function ServicesSection() {
             filter: "blur(0px)",
             rotateX: 0,
             scale: 1,
-            stagger: 0.11,
+            stagger: 0.06,
             y: 0,
-            duration: 0.78,
+            duration: 0.45,
             ease: "power3.out",
           },
-          0.76,
+          0.12,
         )
         .to(
           aura,
           {
             autoAlpha: 0.28,
             scale: 1.12,
-            duration: 0.55,
+            duration: 0.3,
             ease: "power2.out",
           },
-          1.05,
+          0.5,
+        );
+
+      const exitTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: featureSection,
+          start: "top bottom",
+          end: "top 10%",
+          scrub: 0.65,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      exitTimeline
+        .to(
+          serviceContent,
+          {
+            autoAlpha: 0,
+            filter: "blur(12px)",
+            scale: 0.88,
+            y: -32,
+            duration: 0.68,
+            ease: "power2.inOut",
+            transformOrigin: "50% 45%",
+          },
+          0,
+        )
+        .to(
+          aura,
+          {
+            autoAlpha: 0,
+            scale: 0.78,
+            duration: 0.58,
+            ease: "power2.inOut",
+          },
+          0.05,
         );
 
       requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -172,7 +210,7 @@ export function ServicesSection() {
     <section
       ref={sectionRef}
       id="service"
-      className="relative min-h-svh overflow-hidden bg-transparent px-8 py-24 xl:px-12"
+      className="relative -mt-64 min-h-svh overflow-hidden bg-transparent px-8 py-16 xl:px-12"
     >
       <div
         className="pointer-events-none absolute top-1/2 left-1/2 z-10 aspect-square w-2/3 max-w-208 -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial from-primary/25 via-cyan-300/10 to-transparent blur-3xl will-change-[opacity,transform]"
@@ -182,10 +220,10 @@ export function ServicesSection() {
 
       <div className="relative mx-auto flex min-h-svh w-full max-w-330 flex-col justify-center">
         <header
-          className="relative z-30 mx-auto max-w-4xl text-center"
+          className="relative z-30 mr-auto w-3/4 max-w-4xl text-left max-xl:mx-auto max-xl:w-full max-xl:text-center"
           data-service-element="heading"
         >
-          <p className="flex items-center justify-center gap-2 text-xs text-foreground/70 before:size-2 before:rounded-full before:bg-primary">
+          <p className="flex items-center gap-2 text-xs text-foreground/70 before:size-2 before:rounded-full before:bg-primary max-xl:justify-center">
             Service
           </p>
           <h2 className="mt-6 font-display text-6xl leading-tight tracking-wide">

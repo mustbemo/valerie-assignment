@@ -38,17 +38,6 @@ function RobotCallouts() {
         aria-hidden="true"
       >
         <defs>
-          <linearGradient
-            id="robot-callout-gradient"
-            x1="0"
-            y1="0"
-            x2="1"
-            y2="0"
-          >
-            <stop offset="0" stopColor="#d14bff" />
-            <stop offset="0.52" stopColor="#fcf8fd" />
-            <stop offset="1" stopColor="#77e8ff" />
-          </linearGradient>
           <marker
             id="robot-callout-arrow"
             viewBox="0 0 8 8"
@@ -58,7 +47,7 @@ function RobotCallouts() {
             markerHeight="7"
             orient="auto"
           >
-            <path d="M0 0L8 4L0 8Z" fill="#d14bff" />
+            <path d="M0 0L8 4L0 8Z" fill="#fcf8fd" opacity="0.6" />
           </marker>
         </defs>
 
@@ -67,36 +56,36 @@ function RobotCallouts() {
           markerEnd="url(#robot-callout-arrow)"
           d="M80 21.7H78.5L62 23"
           fill="none"
-          stroke='url("#robot-callout-gradient")'
+          stroke="#fcf8fd"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="0.9"
           vectorEffect="non-scaling-stroke"
-          opacity="0.78"
+          opacity="0.6"
         />
         <path
           data-callout-line
           markerEnd="url(#robot-callout-arrow)"
           d="M82 46.6H77.5L65 40"
           fill="none"
-          stroke='url("#robot-callout-gradient")'
+          stroke="#fcf8fd"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="0.9"
           vectorEffect="non-scaling-stroke"
-          opacity="0.78"
+          opacity="0.6"
         />
         <path
           data-callout-line
           markerEnd="url(#robot-callout-arrow)"
           d="M80 75H77.5L66 73"
           fill="none"
-          stroke='url("#robot-callout-gradient")'
+          stroke="#fcf8fd"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="0.9"
           vectorEffect="non-scaling-stroke"
-          opacity="0.78"
+          opacity="0.6"
         />
       </svg>
 
@@ -104,7 +93,7 @@ function RobotCallouts() {
         <div
           key={callout.name}
           className={cn(
-            "absolute left-4/5 w-60 border border-foreground/20 bg-linear-to-r from-primary/10 to-brand-900/70 px-3 py-2.5 text-left backdrop-blur-lg will-change-[filter,opacity,transform] after:absolute after:top-1/2 after:-left-1 after:size-2 after:-translate-y-1/2 after:rotate-45 after:border-b after:border-l after:border-primary after:bg-brand-900",
+            "absolute left-4/5 w-60 rounded-2xl border border-white/15 bg-brand-950/40 px-4 py-3 text-left shadow-xl shadow-brand-950/20 backdrop-blur-xl will-change-[filter,opacity,transform]",
             callout.positionClass,
           )}
           data-callout-item

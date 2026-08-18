@@ -25,6 +25,11 @@
     <path d="M22 910C180 830 274 750 344 628S478 426 580 340 728 218 922 160"/>
     <path d="M-66 614C122 580 172 418 276 314S426 104 652 20"/>
   </g>
+  <g fill="none" stroke="url(#line)" stroke-linecap="round" opacity=".48">
+    <path d="M286 980C322 844 398 784 496 712S630 516 724 436 846 326 988 274" stroke-width="3"/>
+    <path d="M498 980C516 858 580 798 648 714S720 548 824 470 912 408 994 354" stroke-width="2"/>
+    <path d="M710 980C680 864 724 790 800 718S878 594 986 532" stroke-width="3"/>
+  </g>
   <g fill="#d9f7ff" filter="url(#glow)">
     <circle cx="162" cy="687" r="8"/><circle cx="262" cy="497" r="6"/>
     <circle cx="356" cy="446" r="9"/><circle cx="433" cy="286" r="6"/>

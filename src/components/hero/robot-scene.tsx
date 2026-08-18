@@ -16,9 +16,8 @@ import {
 
 const MODEL_PATH = "/robot.glb";
 const NORMALIZED_MODEL_HEIGHT = 5.35;
-const FULL_ROTATION = Math.PI * 2;
-const SERVICE_ROTATION = FULL_ROTATION * 0.62;
-const FEATURE_ROTATION = FULL_ROTATION;
+const SERVICE_ROTATION = MathUtils.degToRad(330);
+const FORWARD_ROTATION = MathUtils.degToRad(360);
 
 type MotionState = {
   x: number;
@@ -56,19 +55,6 @@ const heroFocusedMotion: MotionState = {
   cursorInfluence: 0.35,
 };
 
-const aboutHandoffMotion: MotionState = {
-  ...heroFocusedMotion,
-  x: 0.58,
-  y: -0.46,
-  scale: 0.86,
-  cameraY: 0,
-  cameraZ: 7.3,
-  cameraTargetY: -0.06,
-  keyLight: 48,
-  fillLight: 30,
-  cursorInfluence: 0,
-};
-
 const aboutRestMotion: MotionState = {
   ...heroFocusedMotion,
   x: 0.85,
@@ -83,39 +69,45 @@ const aboutRestMotion: MotionState = {
 };
 
 const serviceMotion: MotionState = {
-  x: 3.45,
-  y: -0.2,
-  scale: 0.5,
+  x: 2.2,
+  y: -0.45,
+  scale: 0.66,
   cameraY: -0.04,
-  cameraZ: 8.55,
-  cameraTargetY: -0.02,
+  cameraZ: 7.75,
+  cameraTargetY: -0.01,
   keyLight: 38,
   fillLight: 32,
-  cursorInfluence: 0.08,
+  cursorInfluence: 0,
 };
 
-const featureHandoffMotion: MotionState = {
-  x: 3.6,
-  y: 1.15,
-  scale: 0.46,
-  cameraY: -0.01,
-  cameraZ: 8.9,
-  cameraTargetY: -0.04,
-  keyLight: 36,
-  fillLight: 28,
-  cursorInfluence: 0.1,
+const serviceFollowMotion: MotionState = {
+  ...serviceMotion,
+  y: 0.55,
+  cameraTargetY: 0.04,
+};
+
+const featureFocusMotion: MotionState = {
+  x: 0,
+  y: -1.6,
+  scale: 1.02,
+  cameraY: -0.04,
+  cameraZ: 7.1,
+  cameraTargetY: 0.04,
+  keyLight: 42,
+  fillLight: 34,
+  cursorInfluence: 0,
 };
 
 const featureMotion: MotionState = {
-  x: 3.75,
-  y: 0.65,
-  scale: 0.44,
-  cameraY: 0.02,
-  cameraZ: 9.25,
-  cameraTargetY: -0.08,
+  x: 0,
+  y: -3.05,
+  scale: 1.02,
+  cameraY: -0.04,
+  cameraZ: 7.25,
+  cameraTargetY: 0,
   keyLight: 34,
   fillLight: 25,
-  cursorInfluence: 0.12,
+  cursorInfluence: 0,
 };
 
 gsap.registerPlugin(ScrollTrigger);
@@ -171,9 +163,9 @@ function RobotModel({ onReady }: RobotModelProps) {
     }
 
     const context = gsap.context(() => {
-      const pageTimeline = gsap.timeline({
+      const introTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "#landing-page",
+          trigger: "#intro-story",
           start: "top top",
           end: "bottom bottom",
           scrub: 0.55,
@@ -181,12 +173,12 @@ function RobotModel({ onReady }: RobotModelProps) {
         },
       });
 
-      pageTimeline
+      introTimeline
         .to(
           motion.current,
           {
             ...heroFocusedMotion,
-            duration: 0.45,
+            duration: 0.35,
             ease: "power2.out",
           },
           0,
@@ -194,90 +186,100 @@ function RobotModel({ onReady }: RobotModelProps) {
         .to(
           motion.current,
           {
-            ...aboutHandoffMotion,
-            duration: 0.9,
+            ...aboutRestMotion,
+            duration: 1.1,
             ease: "power2.inOut",
           },
-          0.45,
+          0.35,
         )
         .to(
           motion.current,
           {
             ...aboutRestMotion,
-            duration: 0.8,
-            ease: "power3.inOut",
-          },
-          1.35,
-        )
-        .to(
-          motion.current,
-          {
-            ...aboutRestMotion,
-            duration: 0.17,
+            duration: 0.4,
             ease: "none",
           },
-          2.15,
-        )
+          1.45,
+        );
+
+      const serviceTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#service",
+          start: "top bottom",
+          endTrigger: "#feature",
+          end: "top bottom",
+          scrub: 0.55,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      serviceTimeline
         .to(
           motion.current,
           {
             ...serviceMotion,
-            duration: 0.75,
-            ease: "power3.inOut",
+            duration: 0.47,
+            ease: "power2.inOut",
           },
-          2.32,
+          0,
         )
         .to(
           motion.current,
           {
-            ...featureHandoffMotion,
-            duration: 0.55,
-            ease: "power3.inOut",
-          },
-          3.07,
-        )
-        .to(
-          motion.current,
-          {
-            ...featureMotion,
-            duration: 0.68,
-            ease: "power3.inOut",
-          },
-          3.62,
-        )
-        .to(
-          motion.current,
-          {
-            ...featureMotion,
-            duration: 0.35,
+            ...serviceFollowMotion,
+            duration: 0.53,
             ease: "none",
           },
-          4.35,
+          0.47,
+        )
+        .to(
+          orientation.current,
+          {
+            y: SERVICE_ROTATION,
+            duration: 0.47,
+            ease: "power2.inOut",
+          },
+          0,
         );
 
-      gsap.to(orientation.current, {
-        y: SERVICE_ROTATION,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#service",
-          start: "top bottom",
-          end: "top 35%",
-          scrub: 0.55,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      gsap.to(orientation.current, {
-        y: FEATURE_ROTATION,
-        ease: "none",
+      const featureTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: "#feature",
           start: "top bottom",
-          end: "top 35%",
-          scrub: 0.55,
+          end: "top -90%",
+          scrub: 0.95,
           invalidateOnRefresh: true,
         },
       });
+
+      featureTimeline
+        .to(
+          orientation.current,
+          {
+            y: FORWARD_ROTATION,
+            duration: 0.7,
+            ease: "power2.inOut",
+          },
+          0,
+        )
+        .to(
+          motion.current,
+          {
+            ...featureFocusMotion,
+            duration: 0.7,
+            ease: "power2.inOut",
+          },
+          0,
+        )
+        .to(
+          motion.current,
+          {
+            ...featureMotion,
+            duration: 0.95,
+            ease: "power2.inOut",
+          },
+          0.7,
+        );
 
       requestAnimationFrame(() => ScrollTrigger.refresh());
     });
