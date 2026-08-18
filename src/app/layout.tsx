@@ -17,7 +17,7 @@ const aldrich = Aldrich({
 });
 
 export const metadata: Metadata = {
-  title: "SkyAI — Intelligent Technology",
+  title: "SkyAI - Intelligent Technology",
   description:
     "Advanced AI technology for intelligent automation, data insights, and modern digital experiences.",
 };

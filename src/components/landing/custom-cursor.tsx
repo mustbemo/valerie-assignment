@@ -3,31 +3,54 @@
 import { useEffect, useRef } from "react";
 
 const INTERACTIVE_SELECTOR = "a, button, input, [role='button']";
+const CURSOR_FOLLOW_SPEED = 18;
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const circleRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const cursor = cursorRef.current;
+    const circle = circleRef.current;
     const finePointer = window.matchMedia("(pointer: fine)");
 
-    if (!cursor || !finePointer.matches) return;
+    if (!cursor || !circle || !finePointer.matches) return;
 
     let animationFrame = 0;
     let customCursorEnabled = false;
     let pointerX = -100;
     let pointerY = -100;
+    let circleX = -100;
+    let circleY = -100;
+    let lastFrameTime = performance.now();
 
-    const renderCursor = () => {
-      cursor.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
-      animationFrame = 0;
+    const renderCursor = (frameTime: number) => {
+      const elapsed = Math.min((frameTime - lastFrameTime) / 1000, 0.05);
+      const followAmount = 1 - Math.exp(-CURSOR_FOLLOW_SPEED * elapsed);
+
+      circleX += (pointerX - circleX) * followAmount;
+      circleY += (pointerY - circleY) * followAmount;
+      circle.style.transform = `translate3d(${circleX - pointerX}px, ${circleY - pointerY}px, 0)`;
+      lastFrameTime = frameTime;
+
+      const stillFollowing =
+        Math.abs(pointerX - circleX) > 0.1 ||
+        Math.abs(pointerY - circleY) > 0.1;
+
+      animationFrame = stillFollowing
+        ? requestAnimationFrame(renderCursor)
+        : 0;
     };
 
     const handlePointerMove = (event: PointerEvent) => {
       pointerX = event.clientX;
       pointerY = event.clientY;
+      cursor.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
 
       if (!customCursorEnabled) {
+        circleX = pointerX;
+        circleY = pointerY;
+        lastFrameTime = performance.now();
         document.documentElement.dataset.customCursor = "true";
         customCursorEnabled = true;
       }
@@ -73,7 +96,9 @@ export function CustomCursor() {
       className="group/cursor pointer-events-none fixed top-0 left-0 z-60 hidden opacity-0 transition-opacity duration-150 will-change-transform data-[visible=true]:opacity-100 pointer-fine:block motion-reduce:hidden"
       aria-hidden="true"
     >
-      <span className="absolute size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/75 transition duration-200 group-data-[active=true]/cursor:scale-150 group-data-[active=true]/cursor:border-primary group-data-[active=true]/cursor:bg-primary/15" />
+      <span ref={circleRef} className="absolute will-change-transform">
+        <span className="absolute size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/75 transition duration-200 group-data-[active=true]/cursor:scale-150 group-data-[active=true]/cursor:border-primary group-data-[active=true]/cursor:bg-primary/15" />
+      </span>
       <span className="absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground" />
     </div>
   );

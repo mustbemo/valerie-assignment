@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SkyAI Landing Page
 
-## Getting Started
+An interactive desktop landing page built for the Valerie Group frontend assessment. It covers the first four sections of the supplied design and uses a scroll-driven 3D robot throughout the page.
 
-First, run the development server:
+- [GitHub repository](https://github.com/mustbemo/valerie-assignment)
+- [Live demo](https://valerie-assignment-danish.vercel.app/)
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Built with
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Next.js, TypeScript, React Three Fiber, Three.js, GSAP ScrollTrigger and Tailwind CSS.
 
-## Learn More
+## Submission notes
 
-To learn more about Next.js, take a look at the following resources:
+- Final GLB size: **8.8 MB** (9,251,208 bytes)
+- The animation follows scroll progress and reverses naturally.
+- No features from the four-section desktop brief were omitted.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The page is desktop-only, as requested in the assignment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Model optimization
 
-## Deploy on Vercel
+I resized the textures to 2K, removed duplicate and unused data, and applied Meshopt compression. This brought the model down from roughly 250 MB to under 12 MB without a noticeable loss in quality. The final GLB in this repository is 8.8 MB.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+gltf-transform resize robot.glb robot-2k.glb --width 2048 --height 2048
+gltf-transform dedup robot-2k.glb robot-step1.glb
+gltf-transform prune robot-step1.glb robot-step2.glb
+gltf-transform meshopt robot-step2.glb robot-smaller.glb
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Code optimization
+
+- The robot loads inside a Suspense boundary, so the rest of the page can render first.
+- The GLB is preloaded and cached for faster loading and repeat visits.
+- Canvas DPR is capped at 1.5 and requests the high-performance GPU mode.
+- ScrollTrigger scrub and Three.js damping keep movement tied smoothly to scroll progress.
+- Reduced-motion preferences are respected.

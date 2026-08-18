@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/hero/hero-section";
+import { RobotPreload } from "@/components/hero/robot-preload";
 import { RobotStage } from "@/components/hero/robot-stage";
 
 import { AboutSection } from "./about-section";
@@ -13,6 +14,7 @@ export function LandingPage() {
       id="landing-page"
       className="relative overflow-x-clip bg-background text-foreground"
     >
+      <RobotPreload />
       <CustomCursor />
       <RobotStage />
       <IntroStory>
